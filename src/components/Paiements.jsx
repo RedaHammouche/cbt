@@ -241,11 +241,24 @@ export function Paiements() {
     }
   }
 
+  // Fonction modifiée pour afficher MAD au lieu d'EUR
   const formatMontant = (montant) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR'
-    }).format(montant)
+    // Option 1: Avec formatage Intl si MAD est supporté
+    try {
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'MAD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(montant)
+    } catch (error) {
+      // Option 2: Formatage manuel si MAD n'est pas supporté
+      const formattedNumber = new Intl.NumberFormat('fr-FR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(montant)
+      return `${formattedNumber} MAD`
+    }
   }
 
   return (
@@ -253,7 +266,7 @@ export function Paiements() {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Gestion des Paiements</h1>
-            <p className="text-gray-600">Enregistrez et suivez les paiements</p>
+            <p className="text-gray-600">Enregistrez et suivez les paiements en dirhams marocains (MAD)</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
             <DialogTrigger asChild>
@@ -270,7 +283,7 @@ export function Paiements() {
                 <DialogDescription>
                   {editingPaiement
                       ? 'Modifiez les informations du paiement.'
-                      : 'Enregistrez un nouveau paiement.'}
+                      : 'Enregistrez un nouveau paiement en dirhams marocains (MAD).'}
                 </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit}>
@@ -298,7 +311,7 @@ export function Paiements() {
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="montant" className="text-right">
-                      Montant *
+                      Montant (MAD) *
                     </Label>
                     <Input
                         id="montant"
@@ -309,7 +322,7 @@ export function Paiements() {
                         value={formData.montant}
                         onChange={handleInputChange}
                         className="col-span-3"
-                        placeholder="0.00"
+                        placeholder="0.00 MAD"
                         required
                     />
                   </div>
@@ -365,7 +378,7 @@ export function Paiements() {
           <CardHeader>
             <CardTitle>Liste des Paiements ({filteredPaiements.length})</CardTitle>
             <CardDescription>
-              Tous les paiements enregistrés
+              Tous les paiements enregistrés en dirhams marocains (MAD)
             </CardDescription>
             <div className="flex items-center space-x-2">
               <Search className="h-4 w-4 text-gray-400" />
@@ -388,7 +401,7 @@ export function Paiements() {
                     <TableRow>
                       <TableHead>Patient</TableHead>
                       <TableHead>Date consultation</TableHead>
-                      <TableHead>Montant</TableHead>
+                      <TableHead>Montant (MAD)</TableHead>
                       <TableHead>Date paiement</TableHead>
                       <TableHead>Mode</TableHead>
                       <TableHead>Actions</TableHead>

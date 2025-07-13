@@ -47,6 +47,22 @@ export default function MouvementsStock() {
         filterProduits()
     }, [produits, searchTermProduits])
 
+    // Fonction pour formater les prix en MAD
+    const formatPrixMAD = (prix) => {
+        if (!prix || prix === 0) return '-'
+
+        try {
+            // Formatage en français avec MAD
+            const formattedNumber = new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(prix)
+            return `${formattedNumber} MAD`
+        } catch (error) {
+            return `${prix} MAD`
+        }
+    }
+
     // Fonctions pour les mouvements
     const fetchMouvements = async () => {
         try {
@@ -279,7 +295,7 @@ export default function MouvementsStock() {
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Gestion du Stock</h1>
-                    <p className="text-gray-600">Gérez vos produits et suivez les mouvements de stock</p>
+                    <p className="text-gray-600">Gérez vos produits et suivez les mouvements de stock (prix en MAD)</p>
                 </div>
             </div>
 
@@ -520,7 +536,7 @@ export default function MouvementsStock() {
                                     </div>
                                     <div className="grid grid-cols-4 items-center gap-4">
                                         <Label htmlFor="prix" className="text-right">
-                                            Prix (€)
+                                            Prix (MAD)
                                         </Label>
                                         <Input
                                             id="prix"
@@ -531,7 +547,7 @@ export default function MouvementsStock() {
                                             value={formDataProduit.prix}
                                             onChange={(e) => handleInputChange('produit', e)}
                                             className="col-span-3"
-                                            placeholder="Optionnel"
+                                            placeholder="0.00 MAD"
                                         />
                                     </div>
                                     <div className="grid grid-cols-4 items-center gap-4">
@@ -581,7 +597,7 @@ export default function MouvementsStock() {
                         <CardHeader>
                             <CardTitle>Liste des Produits</CardTitle>
                             <CardDescription>
-                                Tous les produits disponibles dans votre catalogue
+                                Tous les produits disponibles dans votre catalogue (prix en MAD)
                             </CardDescription>
                             <div className="flex items-center space-x-2">
                                 <Search className="h-4 w-4 text-gray-400" />
@@ -600,7 +616,7 @@ export default function MouvementsStock() {
                                     <tr className="border-b border-gray-200">
                                         <th className="text-left p-3 font-medium text-gray-700">Nom</th>
                                         <th className="text-left p-3 font-medium text-gray-700">Description</th>
-                                        <th className="text-left p-3 font-medium text-gray-700">Prix</th>
+                                        <th className="text-left p-3 font-medium text-gray-700">Prix (MAD)</th>
                                         <th className="text-left p-3 font-medium text-gray-700">Stock</th>
                                         <th className="text-left p-3 font-medium text-gray-700">Seuil minimal</th>
                                         <th className="text-left p-3 font-medium text-gray-700">Actions</th>
@@ -618,7 +634,9 @@ export default function MouvementsStock() {
                                             <tr key={produit.id} className="border-b border-gray-100 hover:bg-gray-50">
                                                 <td className="p-3 font-medium text-gray-900">{produit.nom}</td>
                                                 <td className="p-3 text-gray-700">{produit.description || 'N/A'}</td>
-                                                <td className="p-3 text-gray-700">{produit.prix ? `${produit.prix}€` : '-'}</td>
+                                                <td className="p-3 text-gray-700 font-medium">
+                                                    {formatPrixMAD(produit.prix)}
+                                                </td>
                                                 <td className="p-3">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStockStatus(produit.quantite, produit.seuilMinimal)}`}>
                               {produit.quantite || 0}

@@ -8,7 +8,9 @@ import {
   CreditCard,
   CalendarPlus,
   Package,
-  MessageCircle
+  MessageCircle,
+  Shield,
+  FileCheck
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -47,24 +49,17 @@ const menuItems = [
     title: 'Paiements',
     href: '/paiements',
     icon: CreditCard
-  },
-  {
-    title: 'Réservation Patient',
-    href: '/reservation',
-    icon: CalendarPlus
   }
 ]
 
 export function Sidebar() {
   const location = useLocation()
 
-
-
   return (
       <div className="w-64 bg-white shadow-lg flex flex-col h-full">
         <div className="p-6">
           <div className="flex items-center space-x-2">
-            {/* <Tooth className="h-8 w-8 text-blue-600" /> */}
+            <Shield className="h-8 w-8 text-blue-600" />
             <h1 className="text-xl font-bold text-gray-900">Cabinet Dentaire</h1>
           </div>
         </div>
@@ -94,7 +89,13 @@ export function Sidebar() {
           </div>
         </nav>
 
-       
+        {/* Badge d'information en bas */}
+        <div className="p-4 border-t border-gray-200">
+          <div className="flex items-center text-xs text-gray-500">
+            <FileCheck className="h-4 w-4 mr-2" />
+            <span>Gestion complète du cabinet</span>
+          </div>
+        </div>
       </div>
   )
 }
