@@ -7,7 +7,8 @@ import {
   Pill,
   CreditCard,
   CalendarPlus,
-  Package
+  Package,
+  MessageCircle
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -57,8 +58,10 @@ const menuItems = [
 export function Sidebar() {
   const location = useLocation()
 
+
+
   return (
-      <div className="w-64 bg-white shadow-lg">
+      <div className="w-64 bg-white shadow-lg flex flex-col h-full">
         <div className="p-6">
           <div className="flex items-center space-x-2">
             {/* <Tooth className="h-8 w-8 text-blue-600" /> */}
@@ -66,7 +69,7 @@ export function Sidebar() {
           </div>
         </div>
 
-        <nav className="mt-6">
+        <nav className="mt-6 flex-1">
           <div className="px-3">
             {menuItems.map((item) => {
               const Icon = item.icon
@@ -90,6 +93,8 @@ export function Sidebar() {
             })}
           </div>
         </nav>
+
+       
       </div>
   )
 }

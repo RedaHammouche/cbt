@@ -118,3 +118,64 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* src/App.css - Ajoutez ces animations */
+
+/* Animation pour l'ouverture du chat */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%) translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+.slide-in-from-bottom-5 {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+.slide-in-from-right-5 {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+/* Pulse animation pour le bouton */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Hover effect pour le bouton flottant */
+.floating-chat-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-chat-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
